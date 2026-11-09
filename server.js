@@ -12,6 +12,9 @@ const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 
 const app = express();
+
+// Trust Render's HTTPS reverse proxy.
+app.set("trust proxy", 1);
 const PORT = Number(process.env.PORT || 3000);
 const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, "data");
 const UPLOAD_DIR = path.join(DATA_DIR, "uploads");
@@ -285,9 +288,17 @@ app.post("/api/admin/login", (req, res) => {
   }
   req.session.regenerate(err => {
     if (err) return res.status(500).json({ error: "Could not start a secure session." });
+
     req.session.adminId = admin.id;
     req.session.adminEmail = admin.email;
-    res.json({ ok: true });
+
+    // Persist the session before confirming login.
+    req.session.save(saveErr => {
+      if (saveErr) {
+        return res.status(500).json({ error: "Could not save your admin session." });
+      }
+      res.json({ ok: true });
+    });
   });
 });
 app.post("/api/admin/logout", requireAdmin, (req, res) => {
