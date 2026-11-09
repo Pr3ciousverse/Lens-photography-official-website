@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#101114">
+  <title>Track Your Request | Precious Lens</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    .track-hero {
+      background: linear-gradient(115deg,rgba(9,10,12,.96),rgba(9,10,12,.78)),
+        url("https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1800&q=85") center/cover;
+      color:#fff;padding:76px max(5vw,24px) 70px;text-align:center;
+    }
+    .track-hero .eyebrow { color:var(--gold); }
+    .track-hero h1 {font:800 clamp(36px,5vw,54px)/1.12 "Playfair Display",serif;margin:12px 0;}
+    .track-hero p:last-child {color:#d2d0ca;max-width:590px;margin:0 auto;line-height:1.8;}
+    .track-main {max-width:1000px;margin:0 auto;padding:58px 24px 80px;}
+    .track-lookup {max-width:620px;margin:-105px auto 48px;position:relative;z-index:2;
+      background:#fff;color:#171717;border:1px solid #e9e2ce;border-radius:14px;
+      padding:30px;box-shadow:0 18px 55px #00000018;}
+    .track-lookup h2,.track-results h2 {font:700 25px "Playfair Display",serif;margin:0 0 9px;}
+    .track-lookup>p {color:#686868;font-size:14px;line-height:1.7;margin:0 0 22px;}
+    .track-field {margin:0 0 16px;}
+    .track-field label {display:block;font-size:12px;font-weight:800;margin-bottom:8px;}
+    .track-field input {width:100%;padding:14px 15px;border:1px solid #dedbd3;
+      border-radius:7px;background:#fff;color:#171717;font:14px "DM Sans",sans-serif;}
+    .track-field input:focus {outline:2px solid var(--gold);outline-offset:1px;}
+    .track-submit {width:100%;margin-top:5px;}
+    .track-form-message {font-size:13px;line-height:1.6;min-height:20px;margin:12px 0 0;color:#9b2929;}
+    .track-form-message.success {color:#246b36;}
+    .track-results {display:none;}
+    .track-results.visible {display:block;}
+    .track-summary {display:flex;align-items:center;justify-content:space-between;gap:15px;
+      flex-wrap:wrap;margin-bottom:20px;}
+    .track-reference {font-size:13px;color:var(--muted);margin:0 0 5px;}
+    .track-reference strong {color:var(--gold);letter-spacing:.5px;}
+    .track-status {display:inline-flex;align-items:center;gap:8px;border-radius:30px;
+      padding:9px 15px;background:#f5f2eb;color:#6c511b;font-size:12px;font-weight:800;}
+    .track-status:before {content:"";width:8px;height:8px;border-radius:50%;background:var(--gold);}
+    .track-status[data-status="Completed"] {background:#e8f5eb;color:#216337;}
+    .track-status[data-status="Completed"]:before {background:#26934c;}
+    .track-status[data-status="Archived"] {background:#ededed;color:#555;}
+    .track-panel {background:#fff;color:#171717;border:1px solid #e9e2ce;
+      border-radius:12px;padding:25px;margin:16px 0;box-shadow:0 5px 20px #00000006;}
+    .track-panel h3 {font:700 20px "Playfair Display",serif;margin:0 0 17px;}
+    .track-details {display:grid;grid-template-columns:1fr 1fr;gap:17px;}
+    .track-detail small {display:block;color:#777;font-size:11px;text-transform:uppercase;
+      letter-spacing:.8px;font-weight:700;margin-bottom:5px;}
+    .track-detail strong {font-size:14px;overflow-wrap:anywhere;}
+    .track-original {white-space:pre-wrap;line-height:1.8;color:#555;font-size:14px;margin:0;}
+    .track-reply {border-left:3px solid var(--gold);background:#faf8f3;
+      padding:17px;border-radius:0 8px 8px 0;margin:13px 0;}
+    .track-reply p {white-space:pre-wrap;line-height:1.75;margin:0 0 10px;font-size:14px;}
+    .track-reply time {font-size:11px;color:#777;}
+    .track-empty {color:#777;font-size:14px;line-height:1.7;}
+    .track-updated {font-size:12px;color:#777;margin-top:18px;}
+    .track-again {display:inline-flex;margin:12px 0 0;color:#8b681e;
+      font-weight:800;font-size:13px;cursor:pointer;border:0;background:none;padding:0;}
+    .track-help {text-align:center;color:var(--muted);font-size:13px;line-height:1.8;margin-top:35px;}
+    .track-help a {color:#9b7800;font-weight:800;}
+    html[data-theme="dark"] .track-main {background:#101114;}
+    html[data-theme="dark"] .track-lookup,
+    html[data-theme="dark"] .track-panel {background:#222329;color:#f3f0e9;border-color:#45413a;}
+    html[data-theme="dark"] .track-lookup>p,
+    html[data-theme="dark"] .track-original,
+    html[data-theme="dark"] .track-help {color:#c2c0ba;}
+    html[data-theme="dark"] .track-field input {background:#15161a;color:#f7f4ed;border-color:#494a50;}
+    html[data-theme="dark"] .track-reply {background:#18191d;}
+    html[data-theme="dark"] .track-reply time,
+    html[data-theme="dark"] .track-updated {color:#bcbab4;}
+    html[data-theme="dark"] .track-status {background:#3a3325;color:#f0d89d;}
+    html[data-theme="dark"] .track-status[data-status="Completed"] {background:#193a28;color:#a8e5b9;}
+    html[data-theme="dark"] .track-status[data-status="Archived"] {background:#38383b;color:#ddd;}
+    @media(max-width:650px) {
+      .track-hero {padding:60px 22px 125px;}
+      .track-main {padding:0 16px 55px;}
+      .track-lookup {padding:23px;margin-top:-95px;}
+      .track-panel {padding:20px;}
+      .track-details {grid-template-columns:1fr;}
+      .track-summary {align-items:flex-start;}
+    }
+  </style>
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="/">
+    <span class="brand-mark" id="brandMark">PL</span>
+    <span><strong id="brandName">Precious Lens</strong><small>PHOTOGRAPHY</small></span>
+  </a>
+  <nav id="nav">
+    <a href="/">Home</a><a href="/#services">Services</a>
+    <a href="/#gallery">Portfolio</a><a href="/#contact">Contact</a>
+    <a href="/track.html" aria-current="page">Track Request</a>
+  </nav>
+  <button class="theme-toggle" id="themeToggle" type="button"
+    aria-label="Switch to dark mode" aria-pressed="false">☾ Dark</button>
+  <a class="button button-gold header-cta" href="/#contact">Book Now</a>
+  <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu">☰</button>
+</header>
+
+<main>
+  <section class="track-hero">
+    <p class="eyebrow">YOUR MOMENTS MATTER TO US</p>
+    <h1>Track Your Request</h1>
+    <p>Keep up with your photography enquiry, follow its progress and read messages from the Precious Lens team.</p>
+  </section>
+
+  <section class="track-main">
+    <form id="trackLookupForm" class="track-lookup">
+      <h2>Find Your Request</h2>
+      <p>Enter the tracking reference you received after submitting your enquiry and the email address you used.</p>
+      <div class="track-field">
+        <label for="trackReference">Tracking reference</label>
+        <input id="trackReference" name="reference" type="text"
+          placeholder="e.g. PL-2026-000003" autocomplete="off"
+          pattern="PL-[0-9]{4}-[0-9]{6}" required>
+      </div>
+      <div class="track-field">
+        <label for="trackEmail">Email address</label>
+        <input id="trackEmail" name="email" type="email"
+          placeholder="Enter the email used for your enquiry" autocomplete="email" required>
+      </div>
+      <button class="button button-gold track-submit" id="trackSubmit" type="submit">Track My Request →</button>
+      <p id="trackFormMessage" class="track-form-message" role="status" aria-live="polite"></p>
+    </form>
+
+    <section id="trackResults" class="track-results" aria-live="polite"></section>
+    <p class="track-help">Need assistance with your request?
+      <a href="/#contact">Contact Precious Lens</a>.
+    </p>
+  </section>
+</main>
+
+<footer>
+  <span>© <span id="trackYear"></span> <span id="footerName">Precious Lens</span>. All rights reserved.</span>
+  <a href="/">Back to homepage ↑</a>
+</footer>
+<script src="/track.js" defer></script>
+</body>
+</html>

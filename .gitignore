@@ -1,0 +1,16 @@
+node_modules/
+.env
+data/*
+!data/.gitkeep
+!data/uploads/
+data/uploads/*
+!data/uploads/.gitkeep
+.DS_Store
+
+# Local backups
+backup-*/
+*.before-*
+
+# Local databases, uploads and environment files
+.env.*
+!.env.example

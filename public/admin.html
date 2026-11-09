@@ -1,0 +1,29 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Precious Lens | Admin</title><link rel="stylesheet" href="/admin.css"><script src="/admin.js" defer></script></head><body>
+<section id="loginView" class="login-wrap"><form id="loginForm" class="login-card"><div class="admin-logo">PL</div><p class="eyebrow">PRECIOUS LENS</p><h1>Admin Login</h1><p>Sign in to manage your photography website.</p><label>Gmail / Email address<input name="email" type="email" required placeholder="admin@gmail.com"></label><label>Password<input name="password" type="password" required placeholder="Your password"></label><button class="primary-btn">Sign In</button><p id="loginMessage" class="message"></p><a href="/">← Back to website</a></form></section>
+<div id="dashboardView" class="layout hidden"><aside class="sidebar"><div class="side-brand"><b>PL</b><span>Precious Lens<small>ADMIN PANEL</small></span></div><nav><a class="active" href="#overview">▦ Dashboard</a><a href="#content">✎ Edit Content</a><a href="#services">▣ Services</a><a href="#gallery">▧ Gallery</a><a href="#packages">◇ Packages</a><a href="#enquiries">✉ Enquiries</a><a href="#settings">⚙ Site Settings</a></nav><button id="logoutBtn" class="logout-btn">↪ Sign Out</button></aside>
+<main class="admin-main"><header class="topbar"><div><span class="eyebrow">WEBSITE MANAGEMENT</span><h1>Dashboard</h1></div><span id="adminEmail"></span></header>
+<div id="requestNotification" class="notification-bar" role="status">
+  <span class="notification-dot"></span>
+  <span id="notificationText">Checking for customer requests...</span>
+  <a href="#enquiries">View requests →</a>
+</div>
+<section id="overview" class="stats"><article><span>Total Photos</span><b id="photoCount">—</b></article><article><span>Services</span><b id="serviceCount">—</b></article><article><span>Packages</span><b id="packageCount">—</b></article><article><span>Enquiries</span><b id="enquiryCount">—</b></article></section>
+<section id="content" class="panel"><div class="panel-heading"><h2>Edit Website Content</h2><button class="primary-btn" id="saveContent">Save Changes</button></div><form id="contentForm" class="form-grid">
+<label>Business name<input name="business_name"></label><label>Logo initials<input name="logo_text" maxlength="4"></label><label class="wide">Hero heading<input name="hero_title"></label><label class="wide">Hero subheading<textarea name="hero_subtitle"></textarea></label><label>About heading<input name="about_title"></label><label>Phone<input name="phone"></label><label>Email<input name="email" type="email"></label><label>WhatsApp number (international digits)<input name="whatsapp"></label><label>Business address<input name="address"></label><label>About image URL<input name="about_image"></label><label class="wide">About text<textarea name="about_text"></textarea></label><label class="wide">Hero image URL<input name="hero_image"></label></form></section>
+<section id="settings" class="panel"><h2>Appearance & Social Media</h2>
+<div class="logo-manager">
+  <h3>Website Logo</h3>
+  <p>Upload your client's logo. PNG and WebP with transparent backgrounds work especially well.</p>
+  <img id="logoPreview" class="logo-preview" src="" alt="Current website logo" hidden>
+  <form id="logoForm">
+    <input type="file" name="logo" accept="image/png,image/jpeg,image/webp" required>
+    <button class="primary-btn" type="submit">Upload Logo</button>
+  </form>
+  <button id="deleteLogo" class="danger-btn" type="button">Delete Current Logo</button>
+  <p id="logoMessage" class="message"></p>
+</div><form id="settingsForm" class="form-grid"><label>Gold / accent colour<input name="primary_color" type="color"></label><label>Background colour<input name="background_color" type="color"></label><label>Instagram URL<input name="instagram"></label><label>Facebook URL<input name="facebook"></label><label>WhatsApp URL<input name="whatsapp_url" type="url" placeholder="https://wa.me/234..."></label></form><button class="primary-btn" id="saveSettings">Save Appearance & Socials</button></section>
+<section id="services" class="panel"><div class="panel-heading"><h2>Manage Services</h2><button class="primary-btn" id="addService">+ Add Service</button></div><div id="servicesList"></div></section>
+<section id="packages" class="panel"><div class="panel-heading"><h2>Manage Packages & Prices</h2><button class="primary-btn" id="addPackage">+ Add Package</button></div><div id="packagesList"></div></section>
+<section id="gallery" class="panel"><div class="panel-heading"><h2>Gallery Management</h2><span>JPG, PNG or WebP · Max 8MB each</span></div><form id="uploadForm"><input type="file" name="photos" accept="image/jpeg,image/png,image/webp" multiple required><input name="category" placeholder="Category (e.g. Wedding)" value="Portfolio"><button class="primary-btn">Upload Photos</button></form><div id="galleryList" class="admin-gallery"></div></section>
+<section id="enquiries" class="panel"><div class="panel-heading"><h2>Customer Enquiries</h2><p>Customer request tracking</p><button class="secondary-btn" id="refreshEnquiries">Refresh</button></div><div id="enquiriesList"></div></section>
+<p id="globalMessage" class="message"></p></main></div></body></html>
